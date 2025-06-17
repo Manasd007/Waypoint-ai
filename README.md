@@ -15,7 +15,7 @@ Waypoint is a modern travel planning platform that uses artificial intelligence 
 ## Tech Stack
 
 - **Frontend**: 
-  - Next.js 14
+  - Next.js 15
   - Tailwind CSS
   - Shadcn UI Components
   - TypeScript
@@ -36,15 +36,16 @@ Waypoint is a modern travel planning platform that uses artificial intelligence 
 - OpenAI API key
 - Clerk account
 - Convex account
-- Razorpay account
-- Resend account
+- Google Maps API key
+- Razorpay account (optional)
+- Resend account (optional)
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/waypoint.git
-cd waypoint
+git clone https://github.com/Manasd007/Waypoint-ai.git
+cd Waypoint-ai
 ```
 
 2. Install dependencies:
@@ -53,7 +54,7 @@ pnpm install
 ```
 
 3. Set up environment variables:
-   - Copy `.env.example` to `.env.local`
+   - Copy `env.example` to `.env.local`
    - Fill in your API keys and configuration values
 
 4. Start the development server:
@@ -68,29 +69,74 @@ pnpm dev
 Create a `.env.local` file with the following variables:
 
 ```env
-# OpenAI
-OPENAI_API_KEY=
+# Clerk Authentication (Required)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_your_clerk_publishable_key_here
+CLERK_SECRET_KEY=sk_test_your_clerk_secret_key_here
 
-# Clerk
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
+# OpenAI API (Required)
+OPENAI_API_KEY=sk-your_openai_api_key_here
 
-# Convex
-NEXT_PUBLIC_CONVEX_URL=
-CONVEX_DEPLOY_KEY=
+# Google Maps API (Required)
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 
-# Razorpay
-NEXT_PUBLIC_RAZORPAY_KEY_ID=
-RAZORPAY_KEY_SECRET=
+# Convex (Required)
+NEXT_PUBLIC_CONVEX_URL=your_convex_url_here
+CONVEX_DEPLOY_KEY=your_convex_deploy_key_here
 
-# Resend
-RESEND_API_KEY=
+# Next.js (Required)
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-# Next.js
-NEXT_PUBLIC_APP_URL=
+# Resend (Optional - for emails)
+RESEND_API_KEY=your_resend_api_key_here
+
+# Stripe (Optional - for payments)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key_here
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
+
+# Razorpay (Optional - for payments)
+NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id_here
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret_here
 ```
 
+### Required API Keys Setup
+
+1. **OpenAI API Key**:
+   - Visit [OpenAI Platform](https://platform.openai.com/api-keys)
+   - Create a new API key
+   - Add it to your `.env.local` file
+
+2. **Clerk Authentication**:
+   - Visit [Clerk Dashboard](https://dashboard.clerk.com/)
+   - Create a new application
+   - Copy the publishable and secret keys
+
+3. **Convex Backend**:
+   - Visit [Convex Dashboard](https://dashboard.convex.dev/)
+   - Create a new project
+   - Copy the deployment URL and deploy key
+
+4. **Google Maps API**:
+   - Visit [Google Cloud Console](https://console.cloud.google.com/)
+   - Enable Maps JavaScript API and Places API
+   - Create an API key
+
 ## Development
+
+### Available Scripts
+
+```bash
+# Start development server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Start production server
+pnpm start
+
+# Run linting
+pnpm lint
+```
 
 ### Project Structure
 
@@ -119,6 +165,22 @@ waypoint/
 3. **Payment Processing**:
    - Secure payment handling with Razorpay
    - Credit system for premium features
+
+## Troubleshooting
+
+### Common Issues
+
+1. **ESLint Setup Error**:
+   - The project now includes a proper `.eslintrc.json` configuration
+   - Run `pnpm lint` to check for code issues
+
+2. **OpenAI API Key Error**:
+   - Ensure `OPENAI_API_KEY` is set in your `.env.local` file
+   - Verify the API key is valid and has sufficient credits
+
+3. **Environment Variables Not Loading**:
+   - Make sure your `.env.local` file is in the root directory
+   - Restart the development server after adding new variables
 
 ## Deployment
 
