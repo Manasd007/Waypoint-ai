@@ -9,9 +9,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
-    "@clerk/backend": "^0.38.3",
-    "@clerk/clerk-js": "^4.67.0",
-    "@clerk/nextjs": "^4.29.7",
+    "@clerk/backend": "^0.38.15",
+    "@clerk/clerk-js": "^4.73.14",
+    "@clerk/nextjs": "^6.22.0",
     "@convex-dev/rate-limiter": "^0.2.4",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-alert-dialog": "^1.1.14",
@@ -66,9 +66,13 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^8.34.1",
+    "@typescript-eslint/parser": "^8.34.1",
     "ajv": "^8.12.0",
     "autoprefixer": "^10.0.1",
     "convex": "^1.17.4",
+    "eslint": "^9.29.0",
+    "eslint-config-next": "^15.3.3",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
