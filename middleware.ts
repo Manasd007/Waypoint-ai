@@ -1,26 +1,22 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import { authMiddleware } from "@clerk/nextjs";
 
-// See https://clerk.com/docs/references/nextjs/clerk-middleware for more information about configuring your middleware
-export default clerkMiddleware(async (auth, req) => {
-  // Handle public routes
-  const isPublicRoute = [
+// This example protects all routes including api/trpc routes
+// Please edit this to allow other routes to be public as needed.
+// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your middleware
+export default authMiddleware({
+  publicRoutes: [
     "/",
     "/plans/:planId/community-plan(.*)",
     "/community-plans",
     "/api/get-token",
-  ].some(pattern => {
-    const regex = new RegExp(`^${pattern.replace(/\*/g, '.*')}$`);
-    return regex.test(req.nextUrl.pathname);
-  });
-
-  if (!isPublicRoute) {
-    await auth.protect();
-  }
-}, { debug: true });
+  ],
+  ignoredRoutes: [
+    "/((?!_next|[^?]*\\.(html?|css|js|json|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+  ],
+  debug: true,
+});
 
 export const config = {
-  matcher: [
-    "/((?!_next|[^?]*\\.(html?|css|js|json|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    "/(api|trpc)(.*)",
-  ],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
