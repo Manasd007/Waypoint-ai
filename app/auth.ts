@@ -1,23 +1,17 @@
+'use server';
+
 import { auth } from "@clerk/nextjs/server";
-import { headers } from "next/headers";
 
 export async function getAuthToken() {
   try {
-    // Ensure headers are awaited before using
-    await headers();
-    
-    const token = await auth().getToken({ 
-      template: "convex"
-    });
-    
-    if (!token) {
-      console.warn("No auth token available");
+    const { sessionId, getToken } = auth();
+    if (!sessionId) {
+      console.warn("No session available");
       return undefined;
     }
-    
-    return token;
+    return await getToken();
   } catch (error) {
-    console.error("Error getting auth token:", error);
+    console.error("Auth error:", error);
     return undefined;
   }
 }

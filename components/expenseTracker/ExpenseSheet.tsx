@@ -73,25 +73,29 @@ export default function ExpenseSheet({
   data?: Doc<"expenses">;
   preferredCurrency: string;
 }) {
-  if (edit && !data) return;
-
   const [open, setOpen] = useState(false);
   const { user } = useUser();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      purpose: data?.purpose ?? "",
+      amount: data?.amount ?? 0,
+      category: data?.category ?? "others",
+      userId: data?.userId ?? "",
+      date: data?.date ? new Date(data.date) : new Date(),
+    }
   });
 
   useEffect(() => {
-    if (!edit) return;
-    if (data) {
-      form.setValue("purpose", data.purpose);
-      form.setValue("amount", data.amount);
-      form.setValue("category", data.category);
-      form.setValue("userId", data.userId);
-      form.setValue("date", new Date(data.date));
-    }
-  }, [edit, data]);
+    if (!edit || !data) return;
+    
+    form.setValue("purpose", data.purpose);
+    form.setValue("amount", data.amount);
+    form.setValue("category", data.category);
+    form.setValue("userId", data.userId);
+    form.setValue("date", new Date(data.date));
+  }, [edit, data, form]);
 
   const addExpense = useMutation(api.expenses.createExpense);
   const updateExpense = useMutation(api.expenses.updateExpense);
@@ -99,6 +103,8 @@ export default function ExpenseSheet({
   const currency = preferredCurrency
     ? currencies.find((c) => c.cc.includes(preferredCurrency))?.symbol
     : "₹";
+
+  if (edit && !data) return null;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (!user || !user.id) return;

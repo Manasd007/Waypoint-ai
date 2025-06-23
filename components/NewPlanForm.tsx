@@ -50,13 +50,9 @@ const NewPlanForm = ({
   closeModal: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { isSignedIn } = useAuth();
-  if (!isSignedIn) return null;
-
   const [pendingEmptyPlan, startTransactionEmptyPlan] = useTransition();
   const [pendingAIPlan, startTransactionAiPlan] = useTransition();
-
   const [selectedFromList, setSelectedFromList] = useState(false);
-
   const { toast } = useToast();
 
   const form = useForm<formSchemaType>({
@@ -71,6 +67,8 @@ const NewPlanForm = ({
       },
     },
   });
+
+  if (!isSignedIn) return null;
 
   async function onSubmitEmptyPlan(values: z.infer<typeof formSchema>) {
     if (!selectedFromList) {

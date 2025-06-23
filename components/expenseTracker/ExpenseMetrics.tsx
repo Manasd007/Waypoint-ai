@@ -14,12 +14,23 @@ const ExpenseMetrics = ({
   preferredCurrency: string;
   expenses: (Doc<"expenses"> & {whoSpent: string})[];
 }) => {
-  if (!expenses || expenses.length === 0) return null;
-
   const totalExpenses = useMemo(
-    () => expenses.reduce((total, expense) => total + expense.amount, 0),
-    expenses
+    () => expenses?.reduce((total, expense) => total + expense.amount, 0) ?? 0,
+    [expenses]
   );
+
+  const formatter = useMemo(
+    () =>
+      new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: preferredCurrency,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }),
+    [preferredCurrency]
+  );
+
+  if (!expenses || expenses.length === 0) return null;
 
   const highestExpense = expenses.reduce((prev, curr) => {
     if (prev.amount > curr.amount) return prev;
@@ -44,17 +55,6 @@ const ExpenseMetrics = ({
 
   const topCategory = (Object.keys(mostCommonCategory) as CategoryKey[]).reduce((a, b) =>
     mostCommonCategory[a] > mostCommonCategory[b] ? a : b
-  );
-
-  const formatter = useMemo(
-    () =>
-      new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: preferredCurrency,
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }),
-    [expenses, preferredCurrency]
   );
 
   return (
