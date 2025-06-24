@@ -1,7 +1,8 @@
-import { getToken } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
- 
+import { auth } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+
 export async function GET() {
-  const token = await getToken({ template: 'convex' });
+  const { getToken } = await auth();
+  const token = await getToken({ template: "convex" });
   return NextResponse.json({ token });
 } 
