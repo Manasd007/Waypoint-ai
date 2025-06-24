@@ -75,7 +75,6 @@ export default function ExpenseSheet({
 }) {
   const [open, setOpen] = useState(false);
   const { user } = useUser();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -86,24 +85,19 @@ export default function ExpenseSheet({
       date: data?.date ? new Date(data.date) : new Date(),
     }
   });
-
   useEffect(() => {
     if (!edit || !data) return;
-    
     form.setValue("purpose", data.purpose);
     form.setValue("amount", data.amount);
     form.setValue("category", data.category);
     form.setValue("userId", data.userId);
     form.setValue("date", new Date(data.date));
   }, [edit, data, form]);
-
   const addExpense = useMutation(api.expenses.createExpense);
   const updateExpense = useMutation(api.expenses.updateExpense);
-
   const currency = preferredCurrency
     ? currencies.find((c) => c.cc.includes(preferredCurrency))?.symbol
     : "₹";
-
   if (edit && !data) return null;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {

@@ -35,7 +35,7 @@ export const createUser = internalMutation({
     if (userRecord === null) {
       await ctx.db.insert("users", {
         userId,
-        credits: 5, // Start with 5 free credits
+        credits: 10, // Start with 10 free credits
         email,
         firstName,
         lastName,
@@ -48,7 +48,7 @@ export const createUser = internalMutation({
 /**
  * Called by the client whenever it mounts.
  * If the user already exists, returns their credit balance.
- * If not, creates the row with 5 free credits and returns 5.
+ * If not, creates the row with 10 free credits and returns 10.
  */
 export const getOrCreateUser = mutation({
   args: { clerkId: v.string() },
@@ -62,11 +62,11 @@ export const getOrCreateUser = mutation({
 
     const id = await ctx.db.insert("users", {
       userId: clerkId,
-      credits: 5, // 🎁 free starter credits
+      credits: 10, // 🎁 free starter credits
       email: "", // This will be updated when user data is synced
       createdAt: Date.now(),
     });
-    return 5;
+    return 10;
   },
 });
 
@@ -106,7 +106,7 @@ export const reduceUserCreditsByOne = mutation({
 
     const userRecord = await userQuery(ctx, identity.subject);
     if (userRecord != null) {
-      await ctx.db.patch(userRecord._id, { credits: userRecord.credits - 1 });
+        await ctx.db.patch(userRecord._id, { credits: userRecord.credits - 1 });
     } else console.log("user Not found while reducing credit");
   },
 });

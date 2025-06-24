@@ -54,7 +54,6 @@ const NewPlanForm = ({
   const [pendingAIPlan, startTransactionAiPlan] = useTransition();
   const [selectedFromList, setSelectedFromList] = useState(false);
   const { toast } = useToast();
-
   const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
