@@ -3,7 +3,6 @@ import {
   batch2Schema,
   batch3Schema
 } from "../../lib/schemas";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Function to get Gemini API key - avoids top-level process.env access
 function getGeminiAPIKey() {
@@ -19,7 +18,15 @@ do not return anything in your response outside of curly braces,
 generate response as per the function schema provided. Dates given,
 activity preference and travelling with may influence like 50% while generating plan.`;
 
-const callGeminiAPI = async (prompt: string, schema: any, description: string) => {
+// Define proper types for the schema and error
+type SchemaType = typeof batch1Schema | typeof batch2Schema | typeof batch3Schema;
+type GeminiError = {
+  message: string;
+  type?: string;
+  status?: number;
+};
+
+const callGeminiAPI = async (prompt: string, schema: SchemaType, description: string) => {
   if (!prompt || prompt.trim().length === 0) {
     console.error("Empty prompt provided to Gemini API");
     throw new Error("Empty prompt provided to Gemini API");
@@ -96,25 +103,26 @@ Please respond with ONLY the JSON object, no additional text or explanations.`;
       }]
     };
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const geminiError = error as GeminiError;
     console.error("Gemini API call failed:", {
-      error: error.message,
-      type: error.type,
-      status: error.status
+      error: geminiError.message,
+      type: geminiError.type,
+      status: geminiError.status
     });
 
     // Handle specific Gemini API errors
-    if (error.message.includes('API_KEY_INVALID') || error.message.includes('403')) {
+    if (geminiError.message.includes('API_KEY_INVALID') || geminiError.message.includes('403')) {
       throw new Error("Invalid Gemini API key");
-    } else if (error.message.includes('QUOTA_EXCEEDED') || error.message.includes('429')) {
+    } else if (geminiError.message.includes('QUOTA_EXCEEDED') || geminiError.message.includes('429')) {
       throw new Error("Gemini API quota exceeded. Please try again later.");
-    } else if (error.message.includes('timeout')) {
+    } else if (geminiError.message.includes('timeout')) {
       throw new Error("Gemini API request timed out. Please try again.");
-    } else if (error.message.includes('404') || error.message.includes('not found')) {
+    } else if (geminiError.message.includes('404') || geminiError.message.includes('not found')) {
       throw new Error("Gemini model not found. Please check your API key has access to Gemini API.");
     }
 
-    throw new Error(`Gemini API call failed: ${error.message}`);
+    throw new Error(`Gemini API call failed: ${geminiError.message}`);
   }
 };
 
