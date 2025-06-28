@@ -22,7 +22,7 @@ Waypoint is a modern travel planning platform that uses artificial intelligence 
 
 - **Backend**:
   - Convex (Backend-as-a-Service)
-  - OpenAI API Integration
+  - Google Gemini AI Integration
   - Clerk Authentication
   - Razorpay Payment Processing
   - Resend Email Service
@@ -33,7 +33,7 @@ Waypoint is a modern travel planning platform that uses artificial intelligence 
 
 - Node.js 18+ 
 - pnpm package manager
-- OpenAI API key
+- Google Gemini API key
 - Clerk account
 - Convex account
 - Google Maps API key
@@ -73,9 +73,6 @@ Create a `.env.local` file with the following variables:
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_your_clerk_publishable_key_here
 CLERK_SECRET_KEY=sk_test_your_clerk_secret_key_here
 
-# OpenAI API (Required)
-OPENAI_API_KEY=sk-your_openai_api_key_here
-
 # Google Maps API (Required)
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 
@@ -96,12 +93,15 @@ STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
 # Razorpay (Optional - for payments)
 NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id_here
 RAZORPAY_KEY_SECRET=your_razorpay_key_secret_here
+
+# Google Gemini API (Required)
+GOOGLE_GEMINI_API_KEY=AIza_your_gemini_api_key_here
 ```
 
 ### Required API Keys Setup
 
-1. **OpenAI API Key**:
-   - Visit [OpenAI Platform](https://platform.openai.com/api-keys)
+1. **Google Gemini API Key**:
+   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
    - Create a new API key
    - Add it to your `.env.local` file
 
@@ -146,6 +146,8 @@ waypoint/
 ├── components/          # React components
 ├── convex/             # Convex backend functions
 ├── lib/                # Utility functions and shared code
+│   ├── gemini/         # Gemini AI integration
+│   └── schemas.ts      # Data schemas
 ├── public/             # Static assets
 └── styles/             # Global styles
 ```
@@ -154,7 +156,7 @@ waypoint/
 
 1. **Travel Plan Generation**:
    - User inputs travel preferences
-   - AI generates personalized itinerary
+   - Gemini AI generates personalized itinerary
    - System processes in batches for optimal performance
 
 2. **User Management**:
@@ -166,6 +168,10 @@ waypoint/
    - Secure payment handling with Razorpay
    - Credit system for premium features
 
+4. **Weather Information**:
+   - Real-time weather data via Gemini AI
+   - Fallback mechanism for reliability
+
 ## Troubleshooting
 
 ### Common Issues
@@ -174,9 +180,9 @@ waypoint/
    - The project now includes a proper `.eslintrc.json` configuration
    - Run `pnpm lint` to check for code issues
 
-2. **OpenAI API Key Error**:
-   - Ensure `OPENAI_API_KEY` is set in your `.env.local` file
-   - Verify the API key is valid and has sufficient credits
+2. **Gemini API Key Error**:
+   - Ensure `GOOGLE_GEMINI_API_KEY` is set in your `.env.local` file
+   - Verify the API key is valid and has sufficient quota
 
 3. **Environment Variables Not Loading**:
    - Make sure your `.env.local` file is in the root directory

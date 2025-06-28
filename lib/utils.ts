@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { DateRange } from 'react-day-picker';
 import { formatDate } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
