@@ -135,6 +135,8 @@ const DrawerWithDialog = ({
   );
 };
 
+DrawerWithDialog.displayName = "DrawerWithDialog";
+
 const CreditContent = ({
   boughtCredits,
   freeCredits,
@@ -205,5 +207,7 @@ const CreditContent = ({
     </div>
   );
 };
+
+CreditContent.displayName = "CreditContent";
 
 export default DrawerWithDialog;

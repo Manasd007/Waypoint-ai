@@ -191,4 +191,6 @@ export const SkeletonForTopPlacesToVisit = ({isMaps = false}: {isMaps?: boolean}
   );
 };
 
+SkeletonForTopPlacesToVisit.displayName = "SkeletonForTopPlacesToVisit";
+
 export default TopPlacesToVisit;
