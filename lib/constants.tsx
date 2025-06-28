@@ -21,7 +21,6 @@ import {
   SettingsIcon,
   ShieldQuestion,
   ShoppingBag,
-  ShoppingCart,
   MoonStar,
   Contact,
   Users2,

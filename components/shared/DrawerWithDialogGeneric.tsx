@@ -24,8 +24,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 export const CreditsDrawerWithDialog = () => {
   const user = useQuery(api.users.currentUser);
   const boughtCredits = user?.credits ?? 0;
-  const freeCredits = user?.freeCredits ?? 0;
-  const totalCredits = freeCredits + boughtCredits;
+  const totalCredits = boughtCredits;
 
   const dialogTriggerBtn = (
     <Button
@@ -41,18 +40,19 @@ export const CreditsDrawerWithDialog = () => {
     <DrawerWithDialog dialogTriggerBtn={dialogTriggerBtn}>
       <CreditContent
         boughtCredits={boughtCredits}
-        freeCredits={freeCredits}
+        freeCredits={0}
         email={user?.email}
       />
     </DrawerWithDialog>
   );
 };
 
+CreditsDrawerWithDialog.displayName = "CreditsDrawerWithDialog";
+
 export const GeneratePlanDrawerWithDialog = () => {
   const user = useQuery(api.users.currentUser);
   const boughtCredits = user?.credits ?? 0;
-  const freeCredits = user?.freeCredits ?? 0;
-  const totalCredits = freeCredits + boughtCredits;
+  const totalCredits = boughtCredits;
   const dialogTriggerBtn = (
     <Button
       aria-label={`open dialog button for Create Travel Plan`}
@@ -76,7 +76,7 @@ export const GeneratePlanDrawerWithDialog = () => {
           ) : (
             <CreditContent
               boughtCredits={boughtCredits}
-              freeCredits={freeCredits}
+              freeCredits={0}
               email={user?.email}
             />
           )}
@@ -85,6 +85,8 @@ export const GeneratePlanDrawerWithDialog = () => {
     </DrawerWithDialog>
   );
 };
+
+GeneratePlanDrawerWithDialog.displayName = "GeneratePlanDrawerWithDialog";
 
 const DrawerWithDialog = ({
   dialogTriggerBtn,
