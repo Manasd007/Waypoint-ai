@@ -5,7 +5,6 @@ import {cn} from "@/lib/utils";
 import {Label} from "@radix-ui/react-label";
 import {TabsContent} from "@radix-ui/react-tabs";
 import {TrashIcon, Plus} from "lucide-react";
-import {register} from "module";
 import {Input} from "@/components/ui/input";
 import {
   FieldErrors,
@@ -22,8 +21,8 @@ type TabContentProps = {
     itinerary: ItineraryType;
   }>;
   fields: {
-    itineraryItem: string;
-    briefDescription: string;
+    description: string;
+    brief: string;
     id: string;
   }[];
   errors: FieldErrors<{
@@ -48,15 +47,15 @@ export default function CustomTabContent({
     <TabsContent value={tabName}>
       {fields.map((field, index) => {
         const errorForFieldPlaceName =
-          errors?.itinerary?.activities?.[tabName]?.[index]?.itineraryItem;
+          errors?.itinerary?.[tabName]?.[index]?.brief;
         const errorForFieldPlaceDesc =
-          errors?.itinerary?.activities?.[tabName]?.[index]?.briefDescription;
+          errors?.itinerary?.[tabName]?.[index]?.description;
 
-        const itineraryItemState = getFieldState(
-          `itinerary.activities.${tabName}.${index}.itineraryItem`
+        const briefState = getFieldState(
+          `itinerary.${tabName}.${index}.brief`
         );
-        const briefDescriptionState = getFieldState(
-          `itinerary.activities.${tabName}.${index}.briefDescription`
+        const descriptionState = getFieldState(
+          `itinerary.${tabName}.${index}.description`
         );
 
         return (
@@ -69,7 +68,7 @@ export default function CustomTabContent({
               <div className="flex justify-between w-full items-center">
                 <Label
                   className="text-sm font-bold font-sans tracking-wide"
-                  htmlFor={`itinerary.activities.${tabName}.${index}.itineraryItem`}
+                  htmlFor={`itinerary.${tabName}.${index}.brief`}
                 >
                   Name of the Place
                 </Label>
@@ -83,43 +82,43 @@ export default function CustomTabContent({
                 </Button>
               </div>
               <Input
-                {...register(`itinerary.activities.${tabName}.${index}.itineraryItem` as const)}
+                {...register(`itinerary.${tabName}.${index}.brief` as const)}
                 placeholder="Name of the place"
-                defaultValue={field.itineraryItem}
-                id={`itinerary.activities.${tabName}.${index}.itineraryItem`}
+                defaultValue={field.brief}
+                id={`itinerary.${tabName}.${index}.brief`}
                 className={cn(
                   "border p-2 border-gray-300 w-full flex-1",
-                  itineraryItemState.isTouched &&
+                  briefState.isTouched &&
                     errorForFieldPlaceName &&
                     "border-red-500 border-2"
                 )}
               />
               <ErrorMessage
                 error={errorForFieldPlaceName}
-                isTouched={itineraryItemState.isTouched}
+                isTouched={briefState.isTouched}
               />
             </div>
             <div className="flex flex-col gap-2 justify-center items-start w-full">
               <Label
-                htmlFor={`itinerary.activities.${tabName}.${index}.briefDescription`}
+                htmlFor={`itinerary.${tabName}.${index}.description`}
                 className="text-sm font-bold font-sans tracking-wide"
               >
                 Description of the place
               </Label>
 
               <Textarea
-                {...register(`itinerary.activities.${tabName}.${index}.briefDescription` as const)}
+                {...register(`itinerary.${tabName}.${index}.description` as const)}
                 placeholder="How would you describe it?"
-                defaultValue={field.itineraryItem}
-                id={`itinerary.activities.${tabName}.${index}.briefDescription`}
+                defaultValue={field.description}
+                id={`itinerary.${tabName}.${index}.description`}
                 className={cn(
                   "border p-2 border-gray-300 w-full",
-                  briefDescriptionState.isTouched &&
+                  descriptionState.isTouched &&
                     errorForFieldPlaceDesc &&
                     "border-red-500 border-2"
                 )}
               />
-              {errorForFieldPlaceDesc?.message && briefDescriptionState.isTouched && (
+              {errorForFieldPlaceDesc?.message && descriptionState.isTouched && (
                 <p className="text-sm font-thin text-red-400">{errorForFieldPlaceDesc?.message}</p>
               )}
             </div>

@@ -45,9 +45,9 @@ const ItineraryDayForm = ({planId, setOpen}: ItineraryDayFormProps) => {
   const onSaveEditList = (data: {itinerary: ItineraryType}) => {
     if (!planId) return;
     if (
-      data.itinerary.activities.morning.length === 0 &&
-      data.itinerary.activities.afternoon.length === 0 &&
-      data.itinerary.activities.evening.length === 0
+      data.itinerary.morning.length === 0 &&
+      data.itinerary.afternoon.length === 0 &&
+      data.itinerary.evening.length === 0
     )
       return;
 

@@ -9,6 +9,7 @@
  */
 
 import type * as access from "../access.js";
+import type * as ai_index from "../ai/index.js";
 import type * as cleanup from "../cleanup.js";
 import type * as communityPlans from "../communityPlans.js";
 import type * as email from "../email.js";
@@ -45,6 +46,7 @@ import type {
  */
 declare const fullApi: ApiFromModules<{
   access: typeof access;
+  "ai/index": typeof ai_index;
   cleanup: typeof cleanup;
   communityPlans: typeof communityPlans;
   email: typeof email;

@@ -13,7 +13,7 @@ import { Doc, Id } from "./_generated/dataModel";
 
 import { ConvexError, v } from "convex/values";
 
-import { generatebatch1, generatebatch2, generatebatch3 } from "../lib/openai";
+import { generatebatch1, generatebatch2, generatebatch3 } from "../lib/gemini";
 import { getCurrentPlanSettings } from "./planSettings";
 import { getIdentityOrThrow } from "./utils";
 
@@ -314,7 +314,7 @@ export const prepareBatch1 = action({
 
       if (!completion?.choices?.[0]?.message?.function_call?.arguments) {
         console.error(`No completion received for planId: ${planId}`);
-        throw new ConvexError("No completion received from OpenAI");
+        throw new ConvexError("No completion received from Gemini");
       }
 
       const nameMsg = completion.choices[0].message.function_call.arguments;
@@ -385,7 +385,7 @@ export const prepareBatch2 = action({
 
       if (!completion?.choices?.[0]?.message?.function_call?.arguments) {
         console.error(`No completion received for planId: ${planId}`);
-        throw new ConvexError("No completion received from OpenAI");
+        throw new ConvexError("No completion received from Gemini");
       }
 
       const nameMsg = completion.choices[0].message.function_call.arguments;
@@ -477,36 +477,36 @@ export const prepareBatch3 = action({
         fromDate,
         toDate,
       };
-      console.log(`[ITINERARY] Calling OpenAI with prompt:`, {
+      console.log(`[ITINERARY] Calling Gemini with prompt:`, {
         ...prompt,
         userPrompt: prompt.userPrompt.substring(0, 100) + "..." // Truncate for logging
       });
 
-      // Call OpenAI with timeout
+      // Call Gemini with timeout
       const completion = await Promise.race([
         generatebatch3(prompt),
         new Promise((_, reject) => 
-          setTimeout(() => reject(new Error("OpenAI API call timed out")), 30000)
+          setTimeout(() => reject(new Error("Gemini API call timed out")), 30000)
         )
       ]).catch(error => {
-        console.error(`[ITINERARY] OpenAI API call failed for planId: ${planId}`, {
+        console.error(`[ITINERARY] Gemini API call failed for planId: ${planId}`, {
           error: error instanceof Error ? error.message : String(error),
           prompt: prompt.userPrompt.substring(0, 100) + "..."
         });
-        throw new ConvexError(`OpenAI API call failed: ${error instanceof Error ? error.message : String(error)}`);
+        throw new ConvexError(`Gemini API call failed: ${error instanceof Error ? error.message : String(error)}`);
       });
 
-      // Type guard for OpenAI completion
+      // Type guard for Gemini completion
       if (!completion || typeof completion !== 'object' || !('choices' in completion)) {
         console.error(`[ITINERARY] Invalid completion format for planId: ${planId}`);
-        throw new ConvexError("Invalid completion format received from OpenAI");
+        throw new ConvexError("Invalid completion format received from Gemini");
       }
 
       const choices = completion.choices;
       if (!Array.isArray(choices) || choices.length === 0 || 
           !choices[0]?.message?.function_call?.arguments) {
         console.error(`[ITINERARY] Invalid completion structure for planId: ${planId}`);
-        throw new ConvexError("Invalid completion structure received from OpenAI");
+        throw new ConvexError("Invalid completion structure received from Gemini");
       }
 
       const nameMsg = choices[0].message.function_call.arguments;
@@ -520,7 +520,7 @@ export const prepareBatch3 = action({
           error: error instanceof Error ? error.message : String(error),
           arguments: nameMsg.substring(0, 100) + "..." // Truncate for logging
         });
-        throw new ConvexError("Failed to parse OpenAI response");
+        throw new ConvexError("Failed to parse Gemini response");
       }
 
       // Validate parsed data
@@ -562,7 +562,7 @@ export const prepareBatch3 = action({
   },
 });
 
-//Mutation Patches after openAi responds
+//Mutation Patches after Gemini responds
 export const updateAboutThePlaceBestTimeToVisit = internalMutation({
   args: {
     planId: v.id("plan"),
@@ -628,26 +628,24 @@ export const updateItineraryTopPlacesToVisit = internalMutation({
     itinerary: v.array(
       v.object({
         title: v.string(),
-        activities: v.object({
-          morning: v.array(
-            v.object({
-              itineraryItem: v.string(),
-              briefDescription: v.string(),
-            })
-          ),
-          afternoon: v.array(
-            v.object({
-              itineraryItem: v.string(),
-              briefDescription: v.string(),
-            })
-          ),
-          evening: v.array(
-            v.object({
-              itineraryItem: v.string(),
-              briefDescription: v.string(),
-            })
-          ),
-        }),
+        morning: v.array(
+          v.object({
+            description: v.string(),
+            brief: v.string(),
+          })
+        ),
+        afternoon: v.array(
+          v.object({
+            description: v.string(),
+            brief: v.string(),
+          })
+        ),
+        evening: v.array(
+          v.object({
+            description: v.string(),
+            brief: v.string(),
+          })
+        ),
       })
     ),
   },
@@ -757,26 +755,24 @@ export const addDayInItinerary = mutation({
     planId: v.id("plan"),
     itineraryDay: v.object({
       title: v.string(),
-      activities: v.object({
-        morning: v.array(
-          v.object({
-            itineraryItem: v.string(),
-            briefDescription: v.string(),
-          })
-        ),
-        afternoon: v.array(
-          v.object({
-            itineraryItem: v.string(),
-            briefDescription: v.string(),
-          })
-        ),
-        evening: v.array(
-          v.object({
-            itineraryItem: v.string(),
-            briefDescription: v.string(),
-          })
-        ),
-      }),
+      morning: v.array(
+        v.object({
+          description: v.string(),
+          brief: v.string(),
+        })
+      ),
+      afternoon: v.array(
+        v.object({
+          description: v.string(),
+          brief: v.string(),
+        })
+      ),
+      evening: v.array(
+        v.object({
+          description: v.string(),
+          brief: v.string(),
+        })
+      ),
     }),
   },
   handler: async (ctx, { planId, itineraryDay }) => {

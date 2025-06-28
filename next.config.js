@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   reactStrictMode: false,
   images: {
     remotePatterns: [
@@ -14,6 +11,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "kindred-rhinoceros-563.convex.cloud",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "content-peccary-380.convex.cloud",
         port: "",
       },
       {

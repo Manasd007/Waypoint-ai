@@ -215,12 +215,12 @@ export const updatePlanPrivacy = mutation({
               (day) =>
                 typeof day.title === "string" &&
                 day.title.trim().length > 0 &&
-                Array.isArray(day.activities.morning) &&
-                day.activities.morning.length > 0 &&
-                Array.isArray(day.activities.afternoon) &&
-                day.activities.afternoon.length > 0 &&
-                Array.isArray(day.activities.evening) &&
-                day.activities.evening.length > 0
+                Array.isArray(day.morning) &&
+                day.morning.length > 0 &&
+                Array.isArray(day.afternoon) &&
+                day.afternoon.length > 0 &&
+                Array.isArray(day.evening) &&
+                day.evening.length > 0
             ),
         },
       ];

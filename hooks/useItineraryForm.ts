@@ -1,4 +1,3 @@
-
 import { ItineraryValidationSchema } from "@/components/addNewItineraryDay/ItineraryValidationSchema";
 import { useZodForm } from "@/hooks/useZodForm";
 import { useRef } from "react";
@@ -23,16 +22,14 @@ const useItineraryForm = (planId: string) => {
         defaultValues: {
             itinerary: {
                 title: "New Day",
-                activities: {
-                    morning: [
-                        {
-                            briefDescription: "",
-                            itineraryItem: "",
-                        },
-                    ],
-                    afternoon: [],
-                    evening: [],
-                },
+                morning: [
+                    {
+                        description: "",
+                        brief: "",
+                    },
+                ],
+                afternoon: [],
+                evening: [],
             },
         },
         mode: "onTouched",
@@ -44,7 +41,7 @@ const useItineraryForm = (planId: string) => {
         append: appendMorning,
         remove: removeMorning,
     } = useFieldArray({
-        name: "itinerary.activities.morning",
+        name: "itinerary.morning",
         control,
     });
 
@@ -53,7 +50,7 @@ const useItineraryForm = (planId: string) => {
         append: appendAfternoon,
         remove: removeAfternoon,
     } = useFieldArray({
-        name: "itinerary.activities.afternoon",
+        name: "itinerary.afternoon",
         control,
     });
 
@@ -62,7 +59,7 @@ const useItineraryForm = (planId: string) => {
         append: appendEvening,
         remove: removeEvening,
     } = useFieldArray({
-        name: "itinerary.activities.evening",
+        name: "itinerary.evening",
         control,
     });
 
@@ -70,14 +67,14 @@ const useItineraryForm = (planId: string) => {
         switch (fieldArrayName) {
             case "morning":
                 appendMorning({
-                    itineraryItem: "",
-                    briefDescription: "",
+                    description: "",
+                    brief: "",
                 });
                 break;
             case "afternoon":
                 appendAfternoon({
-                    itineraryItem: "",
-                    briefDescription: "",
+                    description: "",
+                    brief: "",
                 }, {
                     shouldFocus: false,
                     focusIndex: -1
@@ -85,8 +82,8 @@ const useItineraryForm = (planId: string) => {
                 break;
             case "evening":
                 appendEvening({
-                    itineraryItem: "",
-                    briefDescription: "",
+                    description: "",
+                    brief: "",
                 });
                 break;
             default:
@@ -100,8 +97,8 @@ const useItineraryForm = (planId: string) => {
                 if (!ref.current.afternoon) {
                     ref.current.afternoon = true;
                     appendAfternoon({
-                        itineraryItem: "",
-                        briefDescription: "",
+                        description: "",
+                        brief: "",
                     });
                 }
                 break;
@@ -110,8 +107,8 @@ const useItineraryForm = (planId: string) => {
                 if (!ref.current.evening) {
                     ref.current.evening = true;
                     appendEvening({
-                        itineraryItem: "",
-                        briefDescription: "",
+                        description: "",
+                        brief: "",
                     });
                 }
                 break;

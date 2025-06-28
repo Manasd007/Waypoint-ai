@@ -17,9 +17,9 @@ const Timeline = ({itinerary, planId, allowEdit}: TimelineProps) => {
       </div>
     );
   const filteredItinerary = itinerary?.filter((day) => {
-    const isMorningEmpty = day.activities.morning.length === 0;
-    const isAfternoonEmpty = day.activities.afternoon.length === 0;
-    const isEveningEmpty = day.activities.evening.length === 0;
+    const isMorningEmpty = day.morning.length === 0;
+    const isAfternoonEmpty = day.afternoon.length === 0;
+    const isEveningEmpty = day.evening.length === 0;
 
     return !(isMorningEmpty && isAfternoonEmpty && isEveningEmpty);
   });
@@ -42,17 +42,17 @@ const Timeline = ({itinerary, planId, allowEdit}: TimelineProps) => {
           <ItineraryDayHeader planId={planId} title={day.title} allowEdit={allowEdit} />
           <div className="flex flex-col gap-5">
             <Activity
-              activity={day.activities.morning}
+              activity={day.morning}
               heading="Morning"
               icon={<Sunrise className="w-4 h-4 text-blue-500" />}
             />
             <Activity
-              activity={day.activities.afternoon}
+              activity={day.afternoon}
               heading="Afternoon"
               icon={<Sun className="w-4 h-4 text-yellow-500" />}
             />
             <Activity
-              activity={day.activities.evening}
+              activity={day.evening}
               heading="Evening"
               icon={<Sunset className="w-4 h-4 text-gray-600 dark:text-white" />}
             />
@@ -68,7 +68,7 @@ const Activity = ({
   heading,
   icon,
 }: {
-  activity: {itineraryItem: string; briefDescription: string}[];
+  activity: {description: string; brief: string}[];
   heading: string;
   icon: ReactNode;
 }) => {
@@ -87,9 +87,9 @@ const Activity = ({
         {activity.map((act, index) => (
           <li key={index}>
             <div className="w-full p-1 overflow-hidden">
-              <span className=" text-foreground font-semibold">{act.itineraryItem}</span>
+              <span className=" text-foreground font-semibold">{act.brief}</span>
               <p className="max-w-md md:max-w-full text-wrap whitespace-pre-line">
-                {act.briefDescription}
+                {act.description}
               </p>
             </div>
           </li>

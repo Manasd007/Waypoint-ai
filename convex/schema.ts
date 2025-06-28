@@ -25,26 +25,24 @@ export default defineSchema({
     itinerary: v.array(
       v.object({
         title: v.string(),
-        activities: v.object({
-          morning: v.array(
-            v.object({
-              itineraryItem: v.string(),
-              briefDescription: v.string(),
-            })
-          ),
-          afternoon: v.array(
-            v.object({
-              itineraryItem: v.string(),
-              briefDescription: v.string(),
-            })
-          ),
-          evening: v.array(
-            v.object({
-              itineraryItem: v.string(),
-              briefDescription: v.string(),
-            })
-          ),
-        }),
+        morning: v.array(
+          v.object({
+            description: v.string(),
+            brief: v.string(),
+          })
+        ),
+        afternoon: v.array(
+          v.object({
+            description: v.string(),
+            brief: v.string(),
+          })
+        ),
+        evening: v.array(
+          v.object({
+            description: v.string(),
+            brief: v.string(),
+          })
+        ),
       })
     ),
     contentGenerationState: v.object({

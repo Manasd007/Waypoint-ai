@@ -12,7 +12,7 @@ import { ConvexError, v } from "convex/values";
 const DEFAULT_WAIT_BACKOFF = 1000;  // 1 second
 const DEFAULT_RETRY_BACKOFF = 2000; // 2 seconds
 const DEFAULT_BASE = 2;
-const DEFAULT_MAX_FAILURES = 5;     // Reduced from 16 to 5 to fail faster if there's an issue
+const DEFAULT_MAX_FAILURES = 2;     // Reduced from 16 to 5 to fail faster if there's an iss
 
 /**
  * Run and retry action until it succeeds or fails too many times.
