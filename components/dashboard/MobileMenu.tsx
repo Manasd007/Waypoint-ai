@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ArrowLeft } from "lucide-react";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);

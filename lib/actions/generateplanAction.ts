@@ -10,8 +10,8 @@ export async function generatePlanAction(formData: formSchemaType) {
   const token = await getAuthToken();
   const { placeName, activityPreferences, datesOfTravel, companion } = formData;
 
-  const userData = await fetchQuery(api.users.currentUser, {}, { token });
-  const totalCredits = (userData?.credits ?? 0) + (userData?.freeCredits ?? 0);
+  const userData = await fetchQuery(api.users.currentUser, {}, { token: token ?? undefined });
+  const totalCredits = userData?.credits ?? 0;
   if (totalCredits <= 0) {
     console.log(
       `unable to create ai travel plan due to low credits user:${userData?.userId}`
@@ -31,7 +31,7 @@ export async function generatePlanAction(formData: formSchemaType) {
       companion,
       isGeneratedUsingAI: true,
     },
-    { token }
+    { token: token ?? undefined }
   );
 
   if (planId === null) return null;
@@ -45,7 +45,7 @@ export async function generatePlanAction(formData: formSchemaType) {
         planId: planId,
       },
     },
-    { token: token }
+    { token: token ?? undefined }
   );
 
   fetchMutation(
@@ -56,7 +56,7 @@ export async function generatePlanAction(formData: formSchemaType) {
         planId: planId,
       },
     },
-    { token: token }
+    { token: token ?? undefined }
   );
 
   fetchMutation(
@@ -67,7 +67,7 @@ export async function generatePlanAction(formData: formSchemaType) {
         planId: planId,
       },
     },
-    { token: token }
+    { token: token ?? undefined }
   );
 
   fetchMutation(
@@ -78,9 +78,9 @@ export async function generatePlanAction(formData: formSchemaType) {
         planId: planId,
       },
     },
-    { token: token }
+    { token: token ?? undefined }
   );
 
-  fetchMutation(api.users.reduceUserCreditsByOne, {}, { token: token });
+  fetchMutation(api.users.reduceUserCreditsByOne, {}, { token: token ?? undefined });
   redirect(`/plans/${planId}/plan?isNewPlan=true`);
 }

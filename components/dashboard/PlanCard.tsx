@@ -1,14 +1,9 @@
 import { Doc } from "@/convex/_generated/dataModel";
 import navigationSvg from "@/public/card-navigation.svg";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import { CalendarDaysIcon, MapPin, PlaneIcon } from "lucide-react";
+import { CalendarDaysIcon } from "lucide-react";
 import { TooltipContainer } from "@/components/shared/Toolip";
 import { getFormattedDateRange } from "@/lib/utils";
 

@@ -49,9 +49,12 @@ export default function AboutThePlace({content, isLoading, planId, allowEdit}: A
         {!isLoading ? (
           editMode ? (
             <EditText
-              content={content ?? ""}
-              toggleEditMode={handleToggleEditMode}
-              updateContent={updateAboutThePlaceContent}
+              text={content ?? ""}
+              onSave={updateAboutThePlaceContent}
+              isEditing={editMode}
+              onToggleEdit={handleToggleEditMode}
+              type="textarea"
+              placeholder="Add information about the place..."
             />
           ) : (
             content || (

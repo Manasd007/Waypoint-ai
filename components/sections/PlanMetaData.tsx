@@ -229,7 +229,7 @@ const PublishPlan = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Travel Plan</AlertDialogTitle>
           <AlertDialogDescription>
-            {alertText} Don't worry, you can change its privacy whenever you
+            {alertText} Don&apos;t worry, you can change its privacy whenever you
             want.
           </AlertDialogDescription>
         </AlertDialogHeader>

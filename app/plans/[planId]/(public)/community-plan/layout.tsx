@@ -4,47 +4,56 @@ import PlanLayoutContent from "@/components/plan/PlanLayoutContent";
 import {api} from "@/convex/_generated/api";
 import {Id} from "@/convex/_generated/dataModel";
 import {fetchQuery} from "convex/nextjs";
-import {Metadata, ResolvingMetadata} from "next";
+import {Metadata} from "next";
 
 export async function generateMetadata(
   {
     params,
   }: {
-    params: {planId: string};
-  },
-  parent: ResolvingMetadata
+    params: Promise<{ planId: string }>;
+  }
 ): Promise<Metadata> {
-  const id = params.planId;
+  const { planId } = await params;
+  
+  if (!planId || typeof planId !== 'string') {
+    return {
+      title: "Plan Not Found!",
+    };
+  }
+  
   const token = await getAuthToken();
 
   try {
     const plan = await fetchQuery(
       api.plan.getSinglePlan,
-      {id: id as Id<"plan">, isPublic: true},
-      {token}
+      {id: planId as Id<"plan">, isPublic: true},
+      {token: token ?? undefined}
     );
     return {
-      title: plan ? plan.nameoftheplace : "Your Plan",
+      title: plan ? plan.nameoftheplace : "Community Plan",
     };
-  } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
     return {
-      title: "Unauthorized Access!",
+      title: "Plan Not Found!",
     };
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: {planId: string};
+  params: Promise<{planId: string}>;
 }) {
+  const { planId } = await params;
+  
   return (
     <>
       <Header isPublic={true} />
       <main className="flex min-h-[calc(100svh-4rem)] flex-col items-center bg-blue-50/40 dark:bg-background">
-        <PlanLayoutContent planId={params.planId} isPublic={true}>
+        <PlanLayoutContent planId={planId} isPublic={true}>
           {children}
         </PlanLayoutContent>
       </main>

@@ -92,7 +92,7 @@ const CurrencySelector = ({ planId }: { planId: string }) => {
     if (preferredCurrency) {
       form.setValue("currency", preferredCurrency);
     }
-  }, [preferredCurrency]);
+  }, [preferredCurrency, form]);
 
   return (
     <article className="bg-background shadow-sm rounded-lg p-4 border-2 border-border">

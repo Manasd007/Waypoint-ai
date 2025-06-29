@@ -139,11 +139,11 @@ export function NoPlansFound() {
 
       <div className="space-y-4">
         <h2 className="text-2xl font-bold tracking-tight text-foreground">
-          🔍 Let's Try Again Together!
+          🔍 Let&apos;s Try Again Together!
         </h2>
 
         <p className="text-muted-foreground">
-          Explore new public plans by updating your filters.
+          Don&apos;t see your plan? Create one and share it with the community!
         </p>
       </div>
 

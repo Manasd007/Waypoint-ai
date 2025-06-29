@@ -1,80 +1,72 @@
-import SectionWrapper from "@/components/sections/SectionWrapper";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+"use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Info } from "lucide-react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
-const formSchema = z.object({
-  textContent: z.string().min(1, "Cant save without any content"),
-});
-
-type EditTextProps = {
-  content: string | undefined;
-  toggleEditMode: () => void;
-  updateContent: (content: string) => void;
-};
+interface EditTextProps {
+  text: string;
+  onSave: (text: string) => void;
+  isEditing: boolean;
+  onToggleEdit: () => void;
+  type?: "input" | "textarea";
+  placeholder?: string;
+  label?: string;
+}
 
 const EditText = ({
-  content,
-  toggleEditMode,
-  updateContent,
+  text,
+  onSave,
+  isEditing,
+  onToggleEdit,
+  type = "input",
+  placeholder,
+  label,
 }: EditTextProps) => {
-  const [textContent, setTextContent] = useState(content || "");
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      textContent,
-    },
-  });
+  const [textContent] = useState(text);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    updateContent(values.textContent);
+  const handleSave = () => {
+    onSave(textContent);
+    onToggleEdit();
   };
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 pt-2">
-        <FormField
-          control={form.control}
-          name="textContent"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Textarea
-                  placeholder="What do you think about this place"
-                  {...field}
-                  rows={5}
-                  className="h-full"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex gap-2 items-center">
-          <Button type="submit" variant="outline" size="sm">
+  if (isEditing) {
+    return (
+      <div className="space-y-2">
+        {label && <Label>{label}</Label>}
+        {type === "textarea" ? (
+          <Textarea
+            value={textContent}
+            placeholder={placeholder}
+            className="min-h-[100px]"
+          />
+        ) : (
+          <Input value={textContent} placeholder={placeholder} />
+        )}
+        <div className="flex gap-2">
+          <Button onClick={handleSave} size="sm">
             Save
           </Button>
-          <Button onClick={toggleEditMode} size="sm" variant="outline">
+          <Button onClick={onToggleEdit} variant="outline" size="sm">
             Cancel
           </Button>
         </div>
-      </form>
-    </Form>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {label && <Label>{label}</Label>}
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">{text}</p>
+        <Button onClick={onToggleEdit} variant="ghost" size="sm">
+          Edit
+        </Button>
+      </div>
+    </div>
   );
 };
 

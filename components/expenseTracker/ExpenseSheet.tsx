@@ -183,7 +183,7 @@ export default function ExpenseSheet({
                         <SelectValue placeholder="Select a User" />
                       </SelectTrigger>
                       <SelectContent>
-                        <UserDropdown userId={user!.id} planId={planId} />
+                        <UserDropdown planId={planId} />
                       </SelectContent>
                     </Select>
                   </FormControl>

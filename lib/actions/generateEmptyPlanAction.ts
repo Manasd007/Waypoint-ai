@@ -20,7 +20,7 @@ export async function generateEmptyPlanAction(formData: formSchemaType) {
             companion,
             isGeneratedUsingAI: false
         },
-        { token });
+        { token: token ?? undefined });
 
     if (planId === null)
         return null;
@@ -31,7 +31,7 @@ export async function generateEmptyPlanAction(formData: formSchemaType) {
             prompt: placeName,
             planId: planId
         }
-    }, { token: token });
+    }, { token: token ?? undefined });
 
     redirect(`/plans/${planId}/plan?isNewPlan=true`);
 }

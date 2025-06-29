@@ -70,7 +70,7 @@ export default function PlanComboBox() {
                   <CommandItem
                     key={plan._id}
                     value={plan._id}
-                    onSelect={(currentValue) => {
+                    onSelect={() => {
                       setOpen(false);
                       let updatedUrl = pathname.replace(
                         /\/plans\/[^\/]+/,

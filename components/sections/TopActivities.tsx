@@ -4,12 +4,11 @@ import SectionWrapper from "@/components/sections/SectionWrapper";
 import EditList from "@/components/shared/EditList";
 import HeaderWithEditIcon from "@/components/shared/HeaderWithEditIcon";
 import List from "@/components/shared/List";
-import {Button} from "@/components/ui/button";
 import {Skeleton} from "@/components/ui/skeleton";
 import {api} from "@/convex/_generated/api";
 import {Doc} from "@/convex/_generated/dataModel";
 import {useMutation} from "convex/react";
-import {PencilIcon, PlusIcon, Sailboat} from "lucide-react";
+import {Sailboat} from "lucide-react";
 import {useState} from "react";
 
 type TopActivitiesProps = {

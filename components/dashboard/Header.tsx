@@ -32,7 +32,7 @@ const Header = () => {
             </AuthLoading>
             <Unauthenticated>
               <ThemeDropdown />
-              <SignInButton mode="modal" afterSignInUrl="/dashboard" />
+              <SignInButton mode="modal" />
             </Unauthenticated>
             <Authenticated>
               <div className="flex justify-center items-center gap-2">

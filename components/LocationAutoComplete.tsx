@@ -84,7 +84,7 @@ const LocationAutoComplete = ({planId, addNewPlaceToTopPlaces}: LocationAutoComp
       // Fallback: try direct API call as backup
       try {
         const directResponse = await fetch(
-          `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&types=establishment|geocode&key=${apiKey}`
+          `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&types=establishment|geocode&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
         );
         
         if (directResponse.ok) {
@@ -177,7 +177,7 @@ const LocationAutoComplete = ({planId, addNewPlaceToTopPlaces}: LocationAutoComp
       // Fallback: try direct API call as backup
       try {
         const directResponse = await fetch(
-          `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,geometry&key=${apiKey}`
+          `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,geometry&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
         );
         
         if (directResponse.ok) {

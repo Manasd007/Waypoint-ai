@@ -1,49 +1,62 @@
-import {getAuthToken} from "@/app/auth";
+import { getAuthToken } from "@/app/auth";
 import Header from "@/components/plan/Header";
 import PlanLayoutContent from "@/components/plan/PlanLayoutContent";
 import Progress from "@/components/Progress";
-import {Toaster} from "@/components/ui/toaster";
-import {api} from "@/convex/_generated/api";
-import {Id} from "@/convex/_generated/dataModel";
-import {Analytics} from "@vercel/analytics/react";
-import {fetchQuery} from "convex/nextjs";
-import {Metadata, ResolvingMetadata} from "next";
+import { Toaster } from "@/components/ui/toaster";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import { Analytics } from "@vercel/analytics/react";
+import { fetchQuery } from "convex/nextjs";
+import { Metadata, ResolvingMetadata } from "next";
 
 export async function generateMetadata(
   {
-    params: paramsP,
+    params,
   }: {
-    params: Promise<{planId: string}>;
+    params: Promise<{ planId: string }>;
   },
-  parent: ResolvingMetadata
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _: ResolvingMetadata // unused, so underscore
 ): Promise<Metadata> {
-  const { planId } = await paramsP;
+  const { planId } = await params;
+
+  if (!planId || typeof planId !== "string") {
+    return {
+      title: "Plan Not Found",
+    };
+  }
+
   const token = await getAuthToken();
 
   try {
     const plan = await fetchQuery(
       api.plan.getSinglePlan,
-      {id: planId as Id<"plan">, isPublic: false},
-      {token}
+      { id: planId as Id<"plan">, isPublic: false },
+      { token: token ?? undefined }
     );
     return {
       title: plan ? plan.nameoftheplace : "Your Plan",
     };
-  } catch (error) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
     return {
       title: "Unauthorized Access!",
     };
   }
 }
 
-export default async function RootLayout({
+export default async function PrivateLayout({
   children,
-  params: paramsP,
+  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{planId: string}>;
+  params: Promise<{ planId: string }>;
 }) {
-  const { planId } = await paramsP;
+  const { planId } = await params;
+
+  if (!planId || typeof planId !== "string") {
+    throw new Error("Plan ID is required");
+  }
 
   return (
     <>

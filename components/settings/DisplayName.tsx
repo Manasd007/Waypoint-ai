@@ -80,7 +80,7 @@ const DisplayName = () => {
     const { firstName, lastName } = currentUser;
     if (firstName) form.setValue("firstName", firstName);
     if (lastName) form.setValue("lastName", lastName);
-  }, [currentUser]);
+  }, [currentUser, form]);
 
   const shouldGetDisabled = isSending || currentUser === undefined;
 

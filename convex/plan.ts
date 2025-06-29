@@ -169,17 +169,25 @@ export const getPublicPlans = query({
       (plan): plan is Doc<"plan"> => plan !== null
     );
 
-    // Batch process plans with their URLs
+    // Batch process plans with their URLs and settings
     const processedPlans = await Promise.all(
       validPlans.map(async (plan) => {
         const url = plan.storageId
           ? await ctx.storage.getUrl(plan.storageId)
           : null;
 
+        // Get plan settings for fromDate and toDate
+        const planSettings = await ctx.db
+          .query("planSettings")
+          .withIndex("by_planId", (q) => q.eq("planId", plan._id))
+          .unique();
+
         return {
           ...plan,
           isSharedPlan: false,
           url,
+          fromDate: planSettings?.fromDate,
+          toDate: planSettings?.toDate,
         };
       })
     );

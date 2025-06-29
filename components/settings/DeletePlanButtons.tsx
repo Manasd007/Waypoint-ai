@@ -9,6 +9,7 @@ import {useMutation} from "convex/react";
 import {ConvexError} from "convex/values";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
+import {Id} from "@/convex/_generated/dataModel";
 
 export default function DeletePlanButtons({planId}: {planId: string}) {
   const deletePlan = useMutation(api.plan.deletePlan);
@@ -19,11 +20,11 @@ export default function DeletePlanButtons({planId}: {planId: string}) {
   const hanleDeletePlan = async () => {
     try {
       setIsDeleting(true);
-      const {id, dismiss} = toast({
+      const {dismiss} = toast({
         title: "Deleting Plan",
         description: "You plan is being deleted. Please wait...",
       });
-      await deletePlan({planId});
+      await deletePlan({ planId: planId as Id<"plan"> });
       dismiss();
 
       router.push("/dashboard");

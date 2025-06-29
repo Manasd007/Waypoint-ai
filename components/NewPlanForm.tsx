@@ -67,6 +67,12 @@ const NewPlanForm = ({
     },
   });
 
+  // Handle place selection from autocomplete
+  const handlePlaceSelect = (placeId: string, description: string) => {
+    form.setValue("placeName", description);
+    setSelectedFromList(true);
+  };
+
   if (!isSignedIn) return null;
 
   async function onSubmitEmptyPlan(values: z.infer<typeof formSchema>) {
@@ -128,6 +134,7 @@ const NewPlanForm = ({
                   form={form}
                   selectedFromList={selectedFromList}
                   setSelectedFromList={setSelectedFromList}
+                  onPlaceSelect={handlePlaceSelect}
                 />
               </FormControl>
               <FormMessage />

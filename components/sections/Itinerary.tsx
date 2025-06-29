@@ -1,10 +1,9 @@
 import Timeline from "@/components/Timeline";
 import SectionWrapper from "@/components/sections/SectionWrapper";
 import {AddIternaryDay} from "@/components/addNewItineraryDay/AddIternaryDay";
-import {Button} from "@/components/ui/button";
 import {Skeleton} from "@/components/ui/skeleton";
 import {Doc} from "@/convex/_generated/dataModel";
-import {Navigation, PlusCircle, PlusCircleIcon, PlusIcon} from "lucide-react";
+import {Navigation} from "lucide-react";
 
 type ItineraryProps = {
   itinerary: Doc<"plan">["itinerary"] | undefined;

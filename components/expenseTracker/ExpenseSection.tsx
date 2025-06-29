@@ -31,7 +31,7 @@ const ExpenseSection = ({ planId }: { planId: string }) => {
                       shadow-xl font-sans"
       >
         <p className="font-semibold text-lg md:text-xl">
-          You haven't added any Expenses yet!
+          You haven&apos;t added any Expenses yet!
         </p>
         <p className="px-8 max-w-xl text-base text-center text-muted-foreground">
           Effortlessly Track Your Expenses and Stay On Budget!

@@ -11,7 +11,6 @@ import PlanComboBox from "@/components/plan/PlanComboBox";
 import { navlinks } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import useAuth from "@/hooks/useAuth";
-import { MapPinIcon } from "lucide-react";
 import { ThemeDropdown } from "@/components/ThemeDropdown";
 import FeedbackSheet from "@/components/common/FeedbackSheet";
 import { CreditsDrawerWithDialog } from "@/components/shared/DrawerWithDialogGeneric";
@@ -80,7 +79,7 @@ const Header = () => {
             </AuthLoading>
             <Unauthenticated>
               <ThemeDropdown />
-              <SignInButton mode="modal" afterSignInUrl="/dashboard" />
+              <SignInButton mode="modal" />
             </Unauthenticated>
             <Authenticated>
               <div className="flex justify-center items-center gap-2">

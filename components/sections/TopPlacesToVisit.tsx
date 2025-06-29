@@ -5,7 +5,7 @@ import {Skeleton} from "@/components/ui/skeleton";
 import {Doc, Id} from "@/convex/_generated/dataModel";
 import {colors} from "@/lib/constants";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import {DeleteIcon, MapPin, Trash} from "lucide-react";
+import {MapPin, Trash} from "lucide-react";
 import {useEffect, useState} from "react";
 import {Loading} from "@/components/shared/Loading";
 import LocationAutoComplete from "@/components/LocationAutoComplete";

@@ -31,7 +31,7 @@ const Weather = ({placeName}: {placeName: string | undefined}) => {
     getWeather({placeName: placeName})
       .then((data) => {
         if (data) {
-          setWeatherData(data);
+          setWeatherData(data as CurrentWeatherResponse);
         }
       })
       .catch((e) => {
@@ -39,7 +39,7 @@ const Weather = ({placeName}: {placeName: string | undefined}) => {
         setWeatherData(undefined);
       })
       .finally(() => setPlanState((state) => ({...state, weather: true})));
-  }, [placeName]);
+  }, [placeName, getWeather, setPlanState]);
 
   return (
     <SectionWrapper id="weather">
@@ -86,6 +86,7 @@ const WeatherTile = ({children}: {children: ReactNode}) => {
     </div>
   );
 };
+WeatherTile.displayName = 'WeatherTile';
 
 const Temperature = ({
   placeName,
@@ -117,6 +118,7 @@ const Temperature = ({
     </>
   );
 };
+Temperature.displayName = 'Temperature';
 
 const VisibilityDetails = ({visibility}: {visibility: number}) => {
   return (
@@ -128,7 +130,7 @@ const VisibilityDetails = ({visibility}: {visibility: number}) => {
         type="range"
         max={10000}
         value={visibility}
-        onChange={(e) => {}}
+        onChange={() => {}}
         className="p-0 text-background bg-background accent-foreground"
         readOnly
       />
@@ -140,6 +142,7 @@ const VisibilityDetails = ({visibility}: {visibility: number}) => {
     </>
   );
 };
+VisibilityDetails.displayName = 'VisibilityDetails';
 
 const TempHumdityDetails = ({weatherData}: {weatherData: CurrentWeatherResponse}) => {
   return (
@@ -184,6 +187,7 @@ const TempHumdityDetails = ({weatherData}: {weatherData: CurrentWeatherResponse}
     </>
   );
 };
+TempHumdityDetails.displayName = 'TempHumdityDetails';
 
 const WindDeatils = ({speed, deg}: {speed: number; deg: number}) => {
   return (
@@ -278,6 +282,7 @@ const WindDeatils = ({speed, deg}: {speed: number; deg: number}) => {
     </div>
   );
 };
+WindDeatils.displayName = 'WindDeatils';
 
 const WeatherLoadingSkeleton = () => {
   return (
@@ -293,5 +298,6 @@ const WeatherLoadingSkeleton = () => {
     </div>
   );
 };
+WeatherLoadingSkeleton.displayName = 'WeatherLoadingSkeleton';
 
 export default Weather;

@@ -28,7 +28,7 @@ const Banner = () => {
           </div>
           <div className="p-2">
             <p className="text-blue-500 font-bold tracking-wide lg:text-md md:text-base text-sm">
-            'weekend, lively streets, wallet-friendly' <br className="lg:hidden" />
+            &apos;weekend, lively streets, wallet-friendly&apos; <br className="lg:hidden" />
               
             </p>
             <p
@@ -40,13 +40,19 @@ const Banner = () => {
                         md:max-w-xl 
                         text-left"
             >
-             We'll map the markets, book the bites and plot the picture-postcard moments."
+             We&apos;ll map the markets, book the bites and plot the picture-postcard moments.&quot;
             </p>
           </div>
         </div>
         <div className="w-full ml-2 flex justify-start">
           <GeneratePlanButton />
         </div>
+        <p className="text-muted-foreground text-center max-w-2xl">
+          Don&apos;t let planning stress you out. Let AI handle the details while you focus on the adventure!
+        </p>
+        <p className="text-muted-foreground text-center max-w-2xl">
+          &quot;The best journeys are the ones that surprise you.&quot; - Let us help you discover them.
+        </p>
       </article>
       <figure className="h-full lg:flex-1 flex-1 overflow-hidden">
         <TravelHero />

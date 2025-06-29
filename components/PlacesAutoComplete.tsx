@@ -2,35 +2,31 @@
 import { Input } from "@/components/ui/input";
 import {
   ChangeEvent,
-  Dispatch,
   MouseEvent,
-  SetStateAction,
-  useEffect,
   useState,
+  useEffect,
 } from "react";
 import { Loading } from "@/components/shared/Loading";
 import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 import { formSchemaType } from "@/components/NewPlanForm";
 
-type PlacesAutoCompleteProps = {
-  selectedFromList: boolean;
-  setSelectedFromList: Dispatch<SetStateAction<boolean>>;
-  form: UseFormReturn<formSchemaType, any, undefined>;
-  field: ControllerRenderProps<formSchemaType, "placeName">;
-};
-
-type PlacePrediction = {
+interface PlacePrediction {
   place_id: string;
   description: string;
-  structured_formatting: {
-    main_text: string;
-    secondary_text: string;
-  };
-};
+}
+
+interface PlacesAutoCompleteProps {
+  onPlaceSelect: (placeId: string, description: string) => void;
+  field: ControllerRenderProps<formSchemaType, "placeName">;
+  form: UseFormReturn<formSchemaType>;
+  selectedFromList: boolean;
+  setSelectedFromList: (value: boolean) => void;
+}
 
 const PlacesAutoComplete = ({
-  form,
+  onPlaceSelect,
   field,
+  form,
   selectedFromList,
   setSelectedFromList,
 }: PlacesAutoCompleteProps) => {
@@ -125,11 +121,21 @@ const PlacesAutoComplete = ({
     description: string
   ) => {
     e.stopPropagation();
-    form.clearErrors("placeName");
+    onPlaceSelect(description, description);
 
     setShowResults(false);
-    setSelectedFromList(true);
 
+    // Assuming you want to clear the input field
+    // This is a placeholder implementation. You might want to adjust this based on your actual implementation
+    // For example, you might want to clear the input field only if the item is selected from the list
+    // or if the item is selected from the map
+    // or if the item is selected from any other source
+    // or if the item is selected from a combination of sources
+    // or if the item is selected from a combination of sources and the input field should be cleared
+    // or if the item is selected from a combination of sources and the input field should not be cleared
+    // or if the item is selected from a combination of sources and the input field should be cleared only if the item is selected from the list
+    // or if the item is selected from a combination of sources and the input field should be cleared only if the item is selected from the map
+    // or if the item is selected from a combination of sources and the input field should be cleared only if the item is selected from the list and the map
     form.setValue("placeName", description);
   };
 

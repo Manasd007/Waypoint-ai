@@ -54,7 +54,7 @@ const ItineraryDayForm = ({planId, setOpen}: ItineraryDayFormProps) => {
     updateItinerary({
       planId: planId as Doc<"plan">["_id"],
       itineraryDay: data.itinerary,
-    }).then((_) => setOpen(false));
+    }).then(() => setOpen(false));
   };
 
   return (

@@ -26,7 +26,7 @@ const Sidebar = ({
     if (isPublic)
       return planSections.filter((section) => section.isPublic === isPublic);
     else return planSections;
-  }, [planSections, isPublic]);
+  }, [isPublic]);
 
   return (
     <aside className="space-y-6 sticky top-[5.6rem] h-fit">

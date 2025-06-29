@@ -4,13 +4,13 @@ import { useQuery } from "convex-helpers/react/cache/hooks";
 import { api } from "@/convex/_generated/api";
 import { Doc, Id } from "@/convex/_generated/dataModel";
 
+type UserDropdownProps = {
+  planId: string;
+};
+
 const UserDropdown = ({
   planId,
-  userId,
-}: {
-  planId: string;
-  userId: string;
-}) => {
+}: UserDropdownProps) => {
   const sharedUserList = useQuery(api.plan.getAllUsersForAPlan, {
     planId: planId as Id<"plan">,
   });

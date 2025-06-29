@@ -53,9 +53,12 @@ export default function BestTimeToVisit({
         {!isLoading ? (
           editMode ? (
             <EditText
-              content={content ?? ""}
-              toggleEditMode={handleToggleEditMode}
-              updateContent={updateBestTimeToVisitContent}
+              text={content ?? ""}
+              onSave={updateBestTimeToVisitContent}
+              isEditing={editMode}
+              onToggleEdit={handleToggleEditMode}
+              type="textarea"
+              placeholder="Add information about the best time to visit..."
             />
           ) : (
             content || (

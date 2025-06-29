@@ -5,13 +5,11 @@ import {useEffect, useRef, useState} from "react";
 import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai";
 import Link from "next/link";
 import {cn} from "@/lib/utils";
-import {useParams} from "next/navigation";
 import MenuItems from "@/components/home/MenuItems";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
   const asideRef = useRef<HTMLDivElement>(null);
-  const {planId} = useParams<{planId: string}>();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (asideRef.current && !asideRef.current.contains(event.target as Node)) {
