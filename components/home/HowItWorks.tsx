@@ -8,18 +8,14 @@ const HowItWorks = () => {
   return (
     <section
       id="how-it-works"
-      className="min-h-[100svh]
-                     bg-background/90
-                     w-full 
-                     flex justify-center items-center
-                     px-5 md:px-0 py-10 md:py-0"
+      className="min-h-[100svh] bg-background/90 w-full flex justify-center items-center px-5 md:px-0 py-10 md:py-0"
     >
       <div className="flex flex-col gap-20">
         <section className="flex flex-col gap-5">
           <h2 className="text-blue-500 text-center text-lg font-bold tracking-wide">
             How it works?
           </h2>
-          <h3 className="text-foreground text-center md:text-3xl text-xl font-bold ">
+          <h3 className="text-foreground text-center md:text-3xl text-xl font-bold">
             Craft Your Ideal Journey Swiftly
           </h3>
         </section>

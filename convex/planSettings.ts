@@ -208,20 +208,7 @@ export const updatePlanPrivacy = mutation({
         {
           name: "itinerary",
           displayName: "Itinerary",
-          isValid: (val: typeof plan.itinerary) =>
-            Array.isArray(val) &&
-            val.length > 0 &&
-            val.every(
-              (day) =>
-                typeof day.title === "string" &&
-                day.title.trim().length > 0 &&
-                Array.isArray(day.morning) &&
-                day.morning.length > 0 &&
-                Array.isArray(day.afternoon) &&
-                day.afternoon.length > 0 &&
-                Array.isArray(day.evening) &&
-                day.evening.length > 0
-            ),
+          isValid: (val: typeof plan.itinerary) => Array.isArray(val),
         },
       ];
 

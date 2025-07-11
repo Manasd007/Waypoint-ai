@@ -6,6 +6,7 @@ import {AiOutlineClose, AiOutlineMenu} from "react-icons/ai";
 import Link from "next/link";
 import {cn} from "@/lib/utils";
 import MenuItems from "@/components/home/MenuItems";
+import Logo from "@/components/common/Logo";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
@@ -43,18 +44,9 @@ const MobileMenu = () => {
         )}
       >
         <div className="flex justify-between p-2">
-          <Link href="/">
-            <div
-              className="flex flex-col leading-5
-                             font-bold text-md p-1"
-            >
-              <span>Travel</span>
-              <span>
-                Planner
-                <span className="text-blue-500 ml-0.5">AI</span>
-              </span>
-            </div>
-          </Link>
+          <div className="flex items-center">
+            <Logo />
+          </div>
           <Button
             aria-label="close menu"
             onClick={() => setOpen(false)}

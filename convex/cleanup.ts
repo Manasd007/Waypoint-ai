@@ -145,3 +145,14 @@ export const denormalizeImageUrl = mutation({
     );
   },
 });
+
+export const fixItineraryField = mutation({
+  async handler(ctx, args) {
+    const plans = await ctx.db.query("plan").collect();
+    for (const plan of plans) {
+      if (!Array.isArray(plan.itinerary)) {
+        await ctx.db.patch(plan._id, { itinerary: [] });
+      }
+    }
+  },
+});
