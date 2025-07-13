@@ -153,6 +153,7 @@ export default function ExpenseSheet({
         <div className="max-h-[75vh] overflow-y-auto pr-2">
           <Form {...form}>
             <form
+              id="expense-form"
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-8 pt-5"
             >
@@ -284,7 +285,7 @@ export default function ExpenseSheet({
         <div className="sticky bottom-0 left-0 w-full bg-background z-10 pt-4 pb-2 flex justify-end border-t border-border">
           <Button
             type="submit"
-            form={form.formId}
+            form="expense-form"
             variant="outline"
             className={cn("w-full text-white hover:text-white", {
               "bg-teal-500 hover:bg-teal-700": edit,
